@@ -28,7 +28,7 @@ spec:
       workspace: space
     params:
     - name: url
-      value: https://4vvxjdzegganeool65fijcb7472qlffhcrmshe3366io77hsgnsq@jcidata.visualstudio.com/DefaultCollection/JEM%202.0/_git/JCI.OBEM.Postgres.Scripts.Sql
+      value: https://l2kmvg4oorerxrd6xmaxxyx4tovkyhsnobgcrct2y6npxwusm6qa@jcidata.visualstudio.com/DefaultCollection/JEM%202.0/_git/JCI.OBEM.Postgres.Scripts.Sql
     - name: deleteExisting
       value: false
     - name: revision
