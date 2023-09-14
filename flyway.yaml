@@ -1,0 +1,59 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: dummypipeline
+spec:
+  workspaces:
+    - name: space
+    - name: ssh-creds
+  tasks:
+  - name: fwvaultval
+    taskRef:
+      name: fwvaultval
+    workspaces:
+    - name: space
+      workspace: space
+    params:
+      - name: subdirectory
+        value: secrets
+      - name: vault_path
+        value: OBEM/flyway
+  - name: fetch-source
+    taskRef:
+      name: git-clone
+    runAfter:
+      - fwvaultval
+    workspaces:
+    - name: output
+      workspace: space
+    params:
+    - name: url
+      value: https://4vvxjdzegganeool65fijcb7472qlffhcrmshe3366io77hsgnsq@jcidata.visualstudio.com/DefaultCollection/JEM%202.0/_git/JCI.OBEM.Postgres.Scripts.Sql
+    - name: deleteExisting
+      value: false
+    - name: revision
+      value: tekton_obem_master
+  - name: arr0
+    taskRef:
+      name: flyway
+    runAfter:
+      - fetch-source
+    workspaces:
+    - name: space
+      workspace: space
+    matrix:
+      params:
+        - name: flyway-db
+          value: ["Master_Copy","obemdev-entityapi-Backnet-db","obemdev-entityapi-connector_integration-db","obemdev-entityapi-corkireland-db","obemdev-entityapi-Gantner-db"]
+  - name: arr1
+    taskRef:
+      name: flyway
+    runAfter:
+      - arr0
+    workspaces:
+    - name: space
+      workspace: space
+    matrix:
+      params:
+        - name: flyway-db
+          value: ["obemdev-entityapi-obac_dev-db","obemdev-entityapi-OBC_Voltus-db","obemdev-entityapi-obes_integration-db","obemdev-entityapi-Vertiv-db"]
