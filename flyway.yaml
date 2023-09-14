@@ -26,9 +26,11 @@ spec:
     workspaces:
     - name: output
       workspace: space
+    - name: basic-auth
+      workspace: ssh-creds
     params:
     - name: url
-      value: https://l2kmvg4oorerxrd6xmaxxyx4tovkyhsnobgcrct2y6npxwusm6qa@jcidata.visualstudio.com/DefaultCollection/JEM%202.0/_git/JCI.OBEM.Postgres.Scripts.Sql
+      value: https://jcidata.visualstudio.com/DefaultCollection/JEM%202.0/_git/JCI.OBEM.Postgres.Scripts.Sql
     - name: deleteExisting
       value: false
     - name: revision
