@@ -71,7 +71,7 @@ spec:
           - image: ubuntu
             name: check-task-status
             script: |
-              if [[ $(params.aggregateTasksStatus) == "Failed" ]]
+              if [[ "$(params.aggregateTasksStatus)" == "Failed" ]]
               then
                 echo "yeh print karado";
                 echo $(params.aggregateTasksStatus)
