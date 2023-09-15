@@ -60,22 +60,21 @@ spec:
         - name: flyway-db
           value: ["obemdev-entityapi-obac_dev-db","obemdev-entityapi-OBC_Voltus-db","obemdev-entityapi-obes_integration-db","obemdev-entityapi-Vertiv-db"]
   finally:
-    - name: finaltask
+  - name: task3  # this task verifies the status of dag tasks, it fails if verification fails
+    params:
+      - name: task1Status
+        value: "$(tasks.arr0.status)"
+      - name: task2Status
+        value: "$(tasks.arr1.status)"
+    taskSpec:
       params:
-        - name: aggregateTasksStatus
-          value: "$(tasks.status)"
-      taskSpec:
-        params:
-          - name: aggregateTasksStatus
-        steps:
-          - image: ubuntu
-            name: check-task-status
-            script: |
-              #!/bin/bash
-              if [[ "$(params.aggregateTasksStatus)" == "Failed" ]]; then
-                echo "yeh print karado"
-                echo "$(params.aggregateTasksStatus)"
-              fi
-              echo "$(params.aggregateTasksStatus)"
+        - name: task1Status
+        - name: task2Status
+      steps:
+        - image: alpine
+          name: verify-dag-task-status
+          script: |
+            echo "$(params.task1Status)" 
+            echo "$(params.task2Status)"
 
               
