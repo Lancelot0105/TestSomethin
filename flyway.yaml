@@ -74,7 +74,8 @@ spec:
               #!/bin/bash
               if [[ "$(params.aggregateTasksStatus)" == "Failed" ]]; then
                 echo "yeh print karado"
-                echo "${params.aggregateTasksStatus}"
+                echo "$(params.aggregateTasksStatus)"
               fi
+              echo "$(params.aggregateTasksStatus)"
 
               
