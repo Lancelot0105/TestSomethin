@@ -59,3 +59,19 @@ spec:
       params:
         - name: flyway-db
           value: ["obemdev-entityapi-obac_dev-db","obemdev-entityapi-OBC_Voltus-db","obemdev-entityapi-obes_integration-db","obemdev-entityapi-Vertiv-db"]
+  finally:
+    - name: finaltask
+      params:
+        - name: aggregateTasksStatus
+          value: "$(tasks.status)"
+      taskSpec:
+        params:
+          - name: aggregateTasksStatus
+        steps:
+          - image: ubuntu
+            name: check-task-status
+            script: |
+              if [ $(params.aggregateTasksStatus) == "Failed" ]
+              then
+                echo "Looks like one or more tasks returned failure, continue processing the failure"
+              fi            
